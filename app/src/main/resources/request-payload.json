@@ -29,7 +29,7 @@
       "offEmpCode": "EC_NE",
       "availableBalance": 90000,
       "floatAmount": 13250.12,
-      "holdFullBalanceIndicator": false,
+      "holdFullBalanceIndicator": true,
       "pledgeFullBalanceIndicator": false,
       "pledgeAmount": 15254.25,
       "accountBranchCode": "155",
@@ -153,6 +153,13 @@
       "pesoToForeignRate": 50.5,
       "pesoToForeignBaseRate": 50,
       "spotCode": null
+    },
+    "chargeDetails": {
+      "chargeCurrency": {
+        "referenceCode": "USD"
+      },
+      "chargeAmount": 50,
+      "appliedChargeAmount": 49
     }
   }
 }

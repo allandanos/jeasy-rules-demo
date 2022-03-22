@@ -1,4 +1,31 @@
 priority,name,description,condition,actions
-0, "CNP Rule", "Client Not Present", "input.kyc.clientNotPresent.referenceCode == \"CNP_REP\" || input.kyc.clientNotPresent.referenceCode == \"CNP_ACHOL\"", "output.cnp = true;"
-0, "DAUD Rule", "Drawn Against Uncollected Debit", "input.transactionAmount > input.kyc.availableBalance && (input.kyc.holdFullBalanceIndicator == false)", "output.daud = true;"
-0, "DAIF Rule", "Drawn Against Insufficient Fund", "input.transactionAmount > input.kyc.availableBalance && (input.kyc.holdFullBalanceIndicator == true)", "output.daif = true;"
+1,CNP,Client Not Present Rule,"input.kyc.clientNotPresent.referenceCode == ""CNP_REP""
+|| input.kyc.clientNotPresent.referenceCode == ""CNP_ACHOL""
+|| input.kyc.clientNotPresent.referenceCode == ""CNP_BPBIT""
+|| input.kyc.clientNotPresent.referenceCode == ""CNP_BPWOSM""
+|| input.kyc.clientNotPresent.referenceCode == ""CNP_BPWBA""
+|| input.kyc.clientNotPresent.referenceCode == ""CNP_BPWOBA""","output.override = true;
+output.cnp = true;"
+2,DAUD,Drawn Against Uncollected Deposit Rule,"input.transactionAmount > input.kyc.availableBalance && (
+input.kyc.holdFullBalanceIndicator == true
+|| input.kyc.beginHold == true
+|| input.kyc.holdToday == true
+|| input.kyc.unavailable == true
+|| input.kyc.holdFullBalanceIndicator == true
+)","output.override = true;
+output.daud = true"
+3,DAIF,Drawn Against Insufficient Fund Rule,"input.transactionAmount > input.kyc.availableBalance
+&& (
+input.kyc.holdFullBalanceIndicator == false
+&& input.kyc.beginHold == false
+&& input.kyc.holdToday == false
+&& input.kyc.unavailable == false
+&& input.kyc.holdFullBalanceIndicator == false
+)","output.override = true;
+output.daif = true"
+4,NO_PASSBOOK,No Passbook Rule,input.kyc.noPassbook == true,"output.override = true;
+output.noPassbook = true;"
+5,CHARGE_MODIFIED,Partial / Full Charges are Waived Rule,input.chargeDetails.chargeAmount != input.chargeDetails.appliedChargeAmount,"output.override = true;
+output.chargeModified = true;"
+6,FX_MODIFIED,Foreign Exchange Rate is Modified Rule,input.fxCurrencyDetails.pesoToForeignBaseRate != input.fxCurrencyDetails.pesoToForeignRate,"output.override = true;
+output.fxModified = true;"

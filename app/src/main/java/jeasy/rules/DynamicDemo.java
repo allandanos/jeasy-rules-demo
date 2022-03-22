@@ -52,7 +52,7 @@ public class DynamicDemo {
 
         rulesEngine.fire(rules, facts);
 
-        System.out.println(output);
+        System.out.println("\nOUTPUT: " + output);
     }
 
     private Rules getRules() throws Exception {
@@ -91,7 +91,7 @@ public class DynamicDemo {
         ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
         String json = ow.writeValueAsString(rules);
 
-        System.out.println(json);
+        System.out.println("\nRULES: " + json);
         return json;
     }
 
